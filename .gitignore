@@ -1,0 +1,9 @@
+/api_code/.ipynb_checkpoint*
+**/.env*
+/airflow/logs
+**/*.parquet
+**/keys*
+terraform_code/.terraform/
+terraform_code/terraform.tfstate
+terraform_code/.terraform.lock.hcl
+**/__pycache_*

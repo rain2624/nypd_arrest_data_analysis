@@ -1,0 +1,76 @@
+version: 2
+
+sources:
+  - name: schema
+    database: elaborate-haven-440913-q2
+    schema: nypd_arrest_data
+    tables:
+      - name: nypd_arrest_2008_2023
+
+models:
+  - name: stg_nypd_arrest_2008_2023
+    description: >
+      Staging model for NYPD arrest data from 2008 to 2013. This model cleans and standardizes the raw arrest records 
+      by selecting relevant fields, renaming columns for clarity, and handling data type conversions.
+      It serves as the foundation for downstream core models and analysis.
+
+    columns:
+      - name: row_number
+        description: >
+          Surrogate key for each arrest record generated using the dbt_utils package.
+          Ensures a unique identifier even if `arrest_key` is not reliable or missing.
+        tests:
+          - not_null
+          - unique
+      
+      - name: arrest_key
+        description: Unique identifier for each arrest record.
+        tests:
+          - not_null
+
+      - name: arrest_date
+        description: Date when the arrest occurred (converted from raw timestamp).
+        tests:
+          - not_null
+
+      - name: pd_cd
+        description: Internal code corresponding to a specific offense.
+
+      - name: pd_desc
+        description: Description of the offense according to NYPD's internal classification.
+
+      - name: ky_cd
+        description: Key code representing the offense category.
+
+      - name: ofns_desc
+        description: Description of the offense category.
+
+      - name: law_code
+        description: Law code associated with the arrest.
+
+      - name: law_cat_cd
+        description: Legal classification of the offense (e.g., Felony, Misdemeanor, Violation).
+
+      - name: arrest_boro
+        description: Borough where the arrest took place.
+
+      - name: arrest_precinct
+        description: NYPD precinct where the arrest occurred.
+
+      - name: jurisdiction_code
+        description: Code representing the legal jurisdiction.
+
+      - name: age_group
+        description: Age group of the person arrested (e.g., "<18", "18-24", "25-44", "45-64", "65+").
+
+      - name: perp_sex
+        description: Gender of the arrested individual.
+
+      - name: perp_race
+        description: Race of the arrested individual.
+
+      - name: latitude
+        description: Latitude of the arrest location.
+
+      - name: longitude
+        description: Longitude of the arrest location.

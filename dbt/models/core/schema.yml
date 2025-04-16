@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: >
+      This table contains detailed information about the arrest date, such as the year, month, quarter, 
+      week, and day. It provides a more granular breakdown of the arrest date, enabling time-based analysis 
+      such as year-over-year, monthly, or weekly trends for arrest data.
+    tests:
+      - unique:
+          column_name: date_id
+      - not_null:
+          column_name: date_id
+
+
+  - name: dim_offense_classification
+    description: >
+      This table categorizes offenses based on their type and classification. Each record in this table 
+      corresponds to a specific offense, with its unique offense code and a description of the offense. 
+      The table also includes the severity level of each offense (e.g., "Felony," "Misdemeanor," "Violation").
+      It is used to categorize crimes for more granular analysis of crime types and trends.
+    tests:
+      - unique:
+          column_name: offense_id
+      - not_null:
+          column_name: offense_id
+
+
+  - name: dim_jurisdiction_code_classification
+    description: >
+      This table consist of juridiction code and details.
+    tests:
+      - unique:
+          column_name: jurisdiction_code
+      - not_null:
+          column_name: jurisdiction_code
+
+
+  - name: dim_law_classification
+    description: 
+      It consists of law code and level of offense - Misdemeanor, Felony and Violation.
+    tests:
+      - unique:
+          column_name: law_dim_id
+      - not_null:
+          column_name: law_dim_id  
+  
+  - name: dim_suspect_dtls
+    description: >
+      This table consist of suspect details like age range, race and sex.
+    tests:
+      - unique:
+          column_name: suspect_id
+      - not_null:
+          column_name: suspect_id
+
+
+
+  - name: dim_location
+    description: >
+      It consists of boro, precinct, latitude, and longitude where the arrest occurred.
+    tests:
+      - unique:
+          column_name: location_id
+      - not_null:
+          column_name: location_id
+
+
+  - name: fact_arrest_data
+    description: >
+      This fact table contains granular records of individual arrests made by the NYPD between 2008 and 2023.
+      Each record represents a unique arrest event and includes key attributes such as the arrest date,
+      offense type, law classification, jurisdiction code, and borough. The table links to multiple dimension 
+      tables (e.g., dim_date, dim_offense_classification, dim_law_classification, and dim_jurisdication_code_classification) 
+      to support analytical queries on trends over time, offense severity, and geographic distribution.
+
+      A surrogate key (`row_number`) is generated to uniquely identify each arrest record 
+      though the source data provide a natural key `arrest_id`.
+    columns:
+      - name: row_number
+        tests:
+          - unique
+          - not_null
+      - name: arrest_key
+      - name: arrest_date
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: offense_id
+        tests:
+          - relationships:
+              to: ref('dim_offense_classification')
+              field: offense_id
+      - name: law_dim_id
+        tests:
+          - relationships:
+              to: ref('dim_law_classification')
+              field: law_dim_id
+      - name: location_id
+        tests:
+          - relationships:
+              to: ref('dim_location')
+              field: location_id
+      - name: suspect_id
+        tests:
+          - relationships:
+              to: ref('dim_suspect_dtls')
+              field: suspect_id
+      - name: jurisdiction_code
+        tests:
+          - relationships:
+              to: ref('dim_jurisdiction_code_classification')
+              field: jurisdiction_code
+
+

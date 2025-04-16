@@ -1,0 +1,31 @@
+# First-time build can take up to 10 mins.
+FROM apache/airflow:2.10.5
+
+COPY keys/my_cred.json /opt/airflow/keys/gcp-creds.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/keys/gcp-creds.json
+
+# Install Python dependencies as airflow user
+USER airflow
+COPY --chown=airflow:airflow requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Ref: https://airflow.apache.org/docs/docker-stack/recipes.html
+SHELL ["/bin/bash", "-o", "pipefail", "-e", "-u", "-x", "-c"]
+
+# Switch to root for system package installations
+USER root
+
+
+RUN apt-get update -qq && apt-get install -y -qq \
+    vim curl apt-transport-https ca-certificates gnupg
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && apt-get update -y && apt-get install google-cloud-cli -y
+    
+
+WORKDIR $AIRFLOW_HOME
+
+# Copy and set permissions for scripts
+COPY scripts scripts
+RUN chmod +x scripts
+
+# Switch back to airflow user for security
+USER $AIRFLOW_UID
