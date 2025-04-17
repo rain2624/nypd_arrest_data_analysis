@@ -24,7 +24,7 @@ Analyze the NYPD arrest data from 2008-2023 (15 years) to uncover long-term tren
 
 ## Architecture
 
-![alt text](architecture_diagram.png)
+![alt text](./png_architecture/architecture_diagram.png)
 
 ## Steps to follow:
 
@@ -37,7 +37,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 - Go to IAM Admin (on the right side you can see option for Navigator Bar). 
 - Again on Right Side option to create Service Account.
 - You also need to create keys, go to Service Accounts --> you will see list of your Service accounts --> look for your account and when you click Actions --> manage keys --> Add key --> Json Key would be downloaded --> store it in proper place and not to show it (we will need this key later). 
-![alt text](service_account.png)
+![alt text](./png_architecture/service_account.png)
 - Give access to:
     - Compute Engine Admin
     - BigQuery Admin
@@ -125,7 +125,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     15. Configuring Visual Studio code to access remote machine
         - Go to Vs Code - Extension - Remote ssh (first link) - install --> at the bottom there is open a remote window --> Connect to Host (Remote SSH) --> de-zoomcamp
         - a bottom terminal/ upper in terminal new terminal we can see ports --> Now going back to pervious terminal
-    ![alt text](vscode.png)
+    ![alt text](./png_architecture/vscode.png)
 
     16. Installing docker - follow the below steps
 
@@ -277,10 +277,10 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     22. You need to forward port in Visual studio code at bottom terminal/ at top Terminal section --> New terminal go to 8080 and open in local browser how well it runs. 
     23. After completing the process you can delete the vm-instance.
 - Airflow DAG's
-![alt text](airflow_dag.png)
+![alt text](./png_architecture/airflow_dag.png)
 
 - GCS bucket (actually it is under my main bucket name)
-![alt text](gcs_bucket.png)
+![alt text](./png_architecture/gcs_bucket.png)
 
 
 
@@ -323,7 +323,33 @@ FROM `elaborate-haven-440913-q2.nypd_arrest_data.external_arrest_2008_2023`;
 - Please refer the [link](./dbt/readme.md)
 
 ### 5. Power-bi
-- 
+- To view my the dashboard click on this [link](https://www.novypro.com/project/nypd-arrest-data-analysis)
+- I have deployed the project on novypro.com(that is optional). To view dashboard in detail click open in New Window. 
+- There are 2 section:
+    - **Overview**
+![alt text](./png_architecture/nypd_overview.png)
+
+    -  **Drill Through**
+![alt text](./png_architecture/drill_through.png)      ![alt text](./png_architecture/drill_details.png)     
+
+
+- You need to download power-bi desktop in to local system using this [link](https://www.microsoft.com/en-in/download/details.aspx?id=58494)
+- Open power-bi desktop app. Go to Get Data --> Select Google Big Query --> Click Ok to dialogue box --> Select Organazitional account --> Click sign in
+![alt text](./png_architecture/powerbi_login.png)
+
+- Load all tables from prod and create data model like below.
+![alt text](./png_architecture/powerbi_data_model.png)
+
+- Created 4 measures for this dashboard.
+1. total arrest = CALCULATE(DISTINCTCOUNT(fact_arrest_data[arrest_key]))
+2. total felony arrest = CALCULATE(DISTINCTCOUNT(fact_arrest_data[arrest_key]),dim_law_classification[law_category] = "Felony")
+3. total misdemeanor arrest = CALCULATE(DISTINCTCOUNT(fact_arrest_data[arrest_key]),dim_law_classification[law_category] = "Misdemeanor")
+4. total violation arrest = CALCULATE(DISTINCTCOUNT(fact_arrest_data[arrest_key]),dim_law_classification[law_category] = "Violation")
+
+- Further you can download the app and then download my file for further reference by clicking this [link](./dashboard/nypd_arrest_data.pbix).
+
+
+
 
 
 
