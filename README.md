@@ -51,7 +51,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 ### 1. Virtual Machine 
 - I advice you to do this section later first create terraform code folder and your airflow + docker code folder and then test small part of both the things whether running on local or not and if it works then push the code in your new github repo to run via VM all together.
 - #### Instructions to follow:
-    1. Creating and adding SSH keys in gcp
+    1. Open your git bash. Creating and adding SSH keys in gcp
     ```bash
     cd .ssh
     ```
@@ -62,8 +62,10 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     ```
 
     3. Click Enter for password as well.
+
     4. 2 keys are created - key-name (private) and key-name.pub (public)
-    5. Copy the public gcp key
+    
+    5. Copy the public key
     ```bash 
     cat publice-key-name.pub
     ```
@@ -122,7 +124,8 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 
     15. Configuring Visual Studio code to access remote machine
         - Go to Vs Code - Extension - Remote ssh (first link) - install --> at the bottom there is open a remote window --> Connect to Host (Remote SSH) --> de-zoomcamp
-        - Close all ports --> Go to Terminal
+        - a bottom terminal/ upper in terminal new terminal we can see ports --> Now going back to pervious terminal
+    ![alt text](vscode.png)
 
     16. Installing docker - follow the below steps
 
@@ -247,7 +250,6 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     terraform init
     terraform plan
     terraform apply #yes to create services.
-
     ```
 
     21. To  run airflow inside docker again create one more key folder inside your airflow folder
@@ -272,18 +274,56 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     docker-compose up -d
     ```
 
-    22. You need to forward port in Visual studio code to 8080 and open in local browser how well it runs. 
+    22. You need to forward port in Visual studio code at bottom terminal/ at top Terminal section --> New terminal go to 8080 and open in local browser how well it runs. 
     23. After completing the process you can delete the vm-instance.
+- Airflow DAG's
+![alt text](airflow_dag.png)
+
+- GCS bucket (actually it is under my main bucket name)
+![alt text](gcs_bucket.png)
 
 
 
 ### 2. Airflow and Docker
+- Please click this [link](./docker_airflow/airflow_readme.md)
 
 ### 3. Datawarehouse (Big Query)
+- Now, I have loaded data in to GCs, we need to add in datawarehouse.
+- We will first load in external table and then laod in to normal table.\
+
+CREATE EXTERNAL TABLE `elaborate-haven-440913-q2.nypd_arrest_data.external_arrest_2008_2023`
+OPTIONS (
+format ="parquet",
+uris = ['gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2008/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2009/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2010/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2011/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2012/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2013/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2014/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2015/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2016/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2017/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2018/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2019/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2020/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/20201/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2022/*.parquet',
+        'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2023/*.parquet']
+);
+
+
+```sql
+CREATE OR REPLACE TABLE `elaborate-haven-440913-q2.nypd_arrest_data.nypd_arrest_2008_2023` AS
+SELECT *
+FROM `elaborate-haven-440913-q2.nypd_arrest_data.external_arrest_2008_2023`;
+```
 
 ### 4. DBT
+- Please refer the [link](./dbt/readme.md)
 
 ### 5. Power-bi
+- 
 
 
 
