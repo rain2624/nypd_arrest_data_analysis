@@ -290,7 +290,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 - This code file is about discovering the dataset, getting to know about how to access the data.
 - For more info you can visit my code file by this [link](./api_code/api_reading.ipynb)
 - For accessing api again in this same folder I have created .env file and added variable name "api_token" and assigned the nyc open data app token value.
-- I have reference their documkentation with this [link](https://dev.socrata.com/foundry/data.cityofnewyork.us/8h9b-rp9u), code Snippet section and then Python pandas to see how they access the data.
+- I have reference their documentation with this [link](https://dev.socrata.com/foundry/data.cityofnewyork.us/8h9b-rp9u), code Snippet section and then Python pandas to see how they access the data.
 - You can do this in VM
 ```bash
 cd project_folder
