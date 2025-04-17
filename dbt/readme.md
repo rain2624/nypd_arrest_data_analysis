@@ -21,7 +21,7 @@ dbt run
 dbt docs generate
 dbt docs serve
 ```
-![alt text](dbt_docs.png)
+![alt text](../png_architecture/dbt_docs.png)
 
 - Once all is done, you can see in bigquery studio schema nypd_data-modelling and see dataset/tables.
 - Now, you need **Deploy In Prod**. For that visit Deploy --> Environments --> Create environment --> Production (in my case).
