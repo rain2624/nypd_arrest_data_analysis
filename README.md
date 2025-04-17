@@ -26,6 +26,26 @@ Analyze the NYPD arrest data from 2008-2023 (15 years) to uncover long-term tren
 
 ![alt text](architecture_diagram.png)
 
-## 
+## Steps to follow:
+
+### General Instruction: 
+1. Need to create a Google Cloud Account (free account for first time user with 300$ credits for more info visit this [link](https://cloud.google.com/free/docs/free-cloud-features)). To create one visit this [link](https://k21academy.com/google-cloud/create-google-cloud-free-tier-account/)
+2. Before starting with the project we need to set up a Service Account in Google Cloud Platform which would give our applications (like terraform, airflow etc) access to Bigquery, Google Cloud Storage, etc.
+To set up service account you follow this [link](https://cloud.google.com/iam/docs/service-accounts-create) for reference.
+- Go to GCP.
+- Go to IAM Admin (on the right side you can see option for Navigator Bar). 
+- Again on Right Side option to create Service Account.
+![alt text](service_account.png)
+- Give access to:
+    - Compute Engine Admin
+    - BigQuery Admin
+    - Storage Admin
+3. For this project I also have generate App token on NYC open data portal.
+- Go to the dataset with [link](https://data.cityofnewyork.us/Public-Safety/NYPD-Arrests-Data-Historic-/8h9b-rp9u) and then go to Actions --> API --> API documentation --> Under App Token Sign up for an app token --> Under App Token --> Create new App Token (Do not share this and save it in some file).
+
+### 1. Virtual Machine 
+
+
+
 
 
