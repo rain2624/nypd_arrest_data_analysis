@@ -48,6 +48,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 
 4. For this project create a new git repository in both local and githhub. 
 
+
 ### 1. Virtual Machine 
 - I advice you to do this section later first create terraform code folder and your airflow + docker code folder and then test small part of both the things whether running on local or not and if it works then push the code in your new github repo to run via VM all together.
 - #### Instructions to follow:
@@ -161,13 +162,15 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     git clone link_repo_ssh
     ```
 
-    18. get back to docker terminal, when we run below
+    18. Before moving ahead please perform [API Code task](#2-api-code).
+
+    19. get back to docker terminal, when we run below
     ```bash
     docker run hello-world #throws error - permission denied
     ```
     we need to give permissions to docker.
 
-    19. We need to run cmds w/o sudo follow the step with this [link](https://github.com/sindresorhus/guides/blob/main/docker-without-sudo.md) or below steps given:
+    20. We need to run cmds w/o sudo follow the step with this [link](https://github.com/sindresorhus/guides/blob/main/docker-without-sudo.md) or below steps given:
 
     ```bash
     sudo groupadd docker
@@ -181,8 +184,8 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 
     ```
 
-    20. Next thing is to install docker compose with this [link](https://github.com/docker/compose/releases)
-    21. Download docker-compose-linux -x86_64 (copy link address and follow below steps)
+    21. Next thing is to install docker compose with this [link](https://github.com/docker/compose/releases)
+    22. Download docker-compose-linux -x86_64 (copy link address and follow below steps)
     ```bash
     mkdir bin
 
@@ -211,8 +214,8 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     docker-compose version
     ```
 
-    15. Now, we will open our code file from vm in visual studio code. On left press file logo and select open folder --> select your git project folder.
-    16. Installing Terraform--> Linux --> 1.13 --> Amd64, click the [link](https://developer.hashicorp.com/terraform/install)
+    23. Now, we will open our code file from vm in visual studio code. On left press file logo and select open folder --> select your git project folder.
+    24. Installing Terraform--> Linux --> 1.13 --> Amd64, click the [link](https://developer.hashicorp.com/terraform/install)
     ```bash
     cd bin/
     wget link
@@ -224,8 +227,8 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     cd git-project-folder # --> go to terraform folder and ls
     ```
 
-    17. Now you will be needing `Service account account creds (json)`
-    18.  We will use sftp in New git terminal
+    25. Now you will be needing `Service account account creds (json)`
+    26.  We will use sftp in New git terminal
     ```bash
     # got to the path where key is stored for me it was in keys folder
     cd keys
@@ -237,14 +240,14 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 
     # get out of this ctrl + D
     ```
-    19. Now recheck in you vm-instance
+    27. Now recheck in you vm-instance
     ```bash
     ssh vm-instance
     cd keys
     # you will be able to see your key_name_file.json
     ```
 
-    20. Update your terraform variable file key path then
+    28. Update your terraform variable file key path then
     ```bash
     cd terraform_code_folder
     terraform init
@@ -252,7 +255,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     terraform apply #yes to create services.
     ```
 
-    21. To  run airflow inside docker again create one more key folder inside your airflow folder
+    29. To  run airflow inside docker again create one more key folder inside your airflow folder
     ```bash
     cd airflow_folder
     mkdir ./keys
@@ -274,8 +277,8 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
     docker-compose up -d
     ```
 
-    22. You need to forward port in Visual studio code at bottom terminal/ at top Terminal section --> New terminal go to 8080 and open in local browser how well it runs. 
-    23. After completing the process you can delete the vm-instance.
+    30. You need to forward port in Visual studio code at bottom terminal/ at top Terminal section --> New terminal go to 8080 and open in local browser how well it runs. 
+    31. After completing the process you can delete the vm-instance.
 - Airflow DAG's
 ![alt text](./png_architecture/airflow_dag.png)
 
@@ -283,11 +286,23 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 ![alt text](./png_architecture/gcs_bucket.png)
 
 
+### 2. API Code
+- This code file is about discovering the dataset, getting to know about how to access the data.
+- For more info you can visit my code file by this [link](./api_code/api_reading.ipynb)
+- For accessing api again in this same folder I have created .env file and added variable name "api_token" and assigned the nyc open data app token value.
+- I have reference their documkentation with this [link](https://dev.socrata.com/foundry/data.cityofnewyork.us/8h9b-rp9u), code Snippet section and then Python pandas to see how they access the data.
+- You can do this in VM
+```bash
+cd project_folder
+cd api_code
+ls
+jupyter notebook
+```
 
-### 2. Airflow and Docker
+### 3. Airflow and Docker
 - Please click this [link](./docker_airflow/airflow_readme.md)
 
-### 3. Datawarehouse (Big Query)
+### 4. Datawarehouse (Big Query)
 - Now, I have loaded data in to GCs, we need to add in datawarehouse.
 - We will first load in external table and then laod in to normal table.\
 
@@ -320,12 +335,12 @@ SELECT *
 FROM `elaborate-haven-440913-q2.nypd_arrest_data.external_arrest_2008_2023`;
 ```
 
-### 4. DBT
+### 5. DBT
 - Please refer the [link](./dbt/readme.md)
 
-### 5. Power-bi
+### 6. Power-bi
 - To view my the dashboard click on this [link](https://www.novypro.com/project/nypd-arrest-data-analysis)
-- I have deployed the project on novypro.com(that is optional). To view dashboard in detail click open in New Window. 
+- I have deployed the project on novypro.com(that is optional). To view dashboard in detail click open in New Window at the bottom of the dashboard section. 
 - There are 2 section:
 -  **Overview**
 
