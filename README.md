@@ -50,7 +50,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 
 ### 1. Virtual Machine 
 - I advice you to do this section later first create terraform code folder and your airflow + docker code folder and then test small part of both the things whether running on local or not and if it works then push the code in your new github repo to run via VM all together.
-- ##### Instructions to follow:
+- #### Instructions to follow:
 
 
 ### 2. Airflow and Docker
