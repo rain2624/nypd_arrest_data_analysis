@@ -4,10 +4,10 @@
 
 - You need to download power-bi desktop in to local system using this [link](https://www.microsoft.com/en-in/download/details.aspx?id=58494)
 - Open power-bi desktop app. Go to Get Data --> Select Google Big Query --> Click Ok to dialogue box --> Select Organazitional account --> Click sign in
-![alt text](nypd_arrest-data_eng/png_architecture/powerbi_login.png)
+![alt text](../png_architecture/powerbi_login.png)
 
 - Load all tables from prod and create data model like below.
-![alt text](nypd_arrest-data_eng/png_architecture/powerbi_data_model.png)
+![alt text](../png_architecture/powerbi_data_model.png)
 
 - Created 4 measures for this dashboard.
 1. total arrest = CALCULATE(DISTINCTCOUNT(fact_arrest_data[arrest_key]))
