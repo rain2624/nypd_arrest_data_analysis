@@ -291,6 +291,7 @@ To set up service account you follow this [link](https://cloud.google.com/iam/do
 - Now, I have loaded data in to GCs, we need to add in datawarehouse.
 - We will first load in external table and then laod in to normal table.\
 
+```sql
 CREATE EXTERNAL TABLE `elaborate-haven-440913-q2.nypd_arrest_data.external_arrest_2008_2023`
 OPTIONS (
 format ="parquet",
@@ -311,7 +312,7 @@ uris = ['gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2008/*
         'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2022/*.parquet',
         'gs://elaborate-haven-440913-q2-nypd-arrest-data/nypd_arrest_data/2023/*.parquet']
 );
-
+```
 
 ```sql
 CREATE OR REPLACE TABLE `elaborate-haven-440913-q2.nypd_arrest_data.nypd_arrest_2008_2023` AS
@@ -330,7 +331,10 @@ FROM `elaborate-haven-440913-q2.nypd_arrest_data.external_arrest_2008_2023`;
 ![alt text](./png_architecture/nypd_overview.png)
 
     -  **Drill Through**
-![alt text](./png_architecture/drill_through.png)      ![alt text](./png_architecture/drill_details.png)     
+![alt text](./png_architecture/drill_through.png)      
+
+    - **Drill through in details**
+![alt text](./png_architecture/drill_details.png)     
 
 
 - You need to download power-bi desktop in to local system using this [link](https://www.microsoft.com/en-in/download/details.aspx?id=58494)
